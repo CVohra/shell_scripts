@@ -90,7 +90,8 @@ AppSetup() {
     Stat $?
     Print "Downloading JDBC Jar file"
     wget -q $JAR_URL -O $TOMCAT_DIR/lib/mysql-connector-java-5.1.40.jar
-
+    Stat $?
+    
 }
 
 ### Main Program
