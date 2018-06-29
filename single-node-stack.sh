@@ -68,7 +68,11 @@ AppSetup() {
     Head "Application Server Configurations"
     Print "Installing Java"
     yum install java -y &>>$LOG_FILE
-    Stat $? 
+    Stat $?
+    Print "Downloading Tomcat"
+    cd /opt
+    wget -qO - http://redrockdigimark.com/apachemirror/tomcat/tomcat-9/v9.0.10/bin/apache-tomcat-9.0.10.tar.gz | tar -xz 
+    Stat $?
 }
 
 ### Main Program
