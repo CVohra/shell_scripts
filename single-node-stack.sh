@@ -34,7 +34,9 @@ Head() {
 }
 
 Stat() {
-    if [ $1 -eq 0 ]; then 
+    if [ "$1" = SKIP ]; then 
+        echo -e "-- ${Y}SKIPPING$N" 
+    elif [ $1 -eq 0 ]; then 
         Succ
     else
         Fail
@@ -75,9 +77,13 @@ AppSetup() {
     yum install java -y &>>$LOG_FILE
     Stat $?
     Print "Downloading Tomcat"
-    cd /opt
-    wget -qO - $TOMCAT_URL | tar -xz 
-    Stat $?
+    if [ -d $TOMCAT_DIR ]; then 
+        Stat SKIP
+    else
+        cd /opt
+        wget -qO - $TOMCAT_URL | tar -xz 
+        Stat $?
+    fi
     rm -rf $TOMCAT_DIR/webapps/*
     Print "Downloading WAR file"
     wget -q $WAR_URL -O $TOMCAT_DIR/webapps/student.war 
