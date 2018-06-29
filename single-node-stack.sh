@@ -11,12 +11,15 @@ R="\e[31m"
 N="\e[0m"
 
 ### Functions
+Print() {
+    echo -n -e "$1"
+}
 Succ() {
-    echo -e "$1 -- ${G}SUCCESS $N"
+    echo -e " -- ${G}SUCCESS $N"
 }
 
 Fail() {
-    echo -e "$1 -- ${R}FAILURE$N"
+    echo -e " -- ${R}FAILURE$N"
     echo "Check the log file -- $LOG_FILE"
     exit 1
 }
@@ -27,9 +30,9 @@ Head() {
 
 Stat() {
     if [ $1 -eq 0 ]; then 
-        Succ "$2"
+        Succ
     else
-        Fail "$2"
+        Fail
     fi
 }
 
@@ -60,8 +63,9 @@ flush privileges;" >/tmp/student.sql
 
 AppSetup() {
     Head "Application Server Configurations"
+    Print "Installing Java"
     yum install java -y &>>$LOG_FILE
-    Stat $? "Installing Java"
+    Stat $? 
 }
 
 ### Main Program
