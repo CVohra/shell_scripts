@@ -38,11 +38,13 @@ Stat() {
 
 DBSetup() {
     Head "DB Server Configurations"
+    Print "Installing MariaDB Server"
     yum install mariadb-server -y &>>$LOG_FILE 
-    Stat $? "Installing MariaDB Server"
-    systemctl enable mariadb &>>$LOG_FILE 
+    Stat $? 
+    Print "Starting MariaDB Server"
+    systemctl enable mariadb &>>$LOG_FILE
     systemctl start mariadb &>>$LOG_FILE
-    Stat $? "Starting MariaDB Server"
+    Stat $? 
     echo "create database if not exists studentapp;
 use studentapp;
 CREATE TABLE if not exists Students(student_id INT NOT NULL AUTO_INCREMENT,
@@ -55,9 +57,10 @@ CREATE TABLE if not exists Students(student_id INT NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (student_id)
 );
 grant all privileges on studentapp.* to 'student'@'%' identified by 'student@1';
-flush privileges;" >/tmp/student.sql 
+flush privileges;" >/tmp/student.sql
+    Print "Configuring Database"
     mysql < /tmp/student.sql &>>$LOG_FILE
-    Stat $? "Configuring Database"
+    Stat $? 
 
 }
 
