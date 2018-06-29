@@ -22,7 +22,7 @@ Fail() {
 }
 
 Head() {
-    echo -e "\t\e[1;4;35m $1 $N"
+    echo -e "\t\e[1;4;36m $1 $N"
 }
 
 DBSetup() {
