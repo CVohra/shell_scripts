@@ -15,15 +15,18 @@ Succ() {
     echo -e "$1 -- $G SUCCESS $N"
 }
 
+Fail() {
+    echo -e "$1 -- $R FAILURE $N"
+    echo "Check the log file -- $LOG_FILE"
+    exit 1
+}
 
 DBSetup() {
     yum install mariadb-server -y &>>$LOG_FILE 
     if [ $? -eq 0 ]; then 
         Succ "Installing DB Server"
     else
-        echo "Installing DB Server -- FAILURE"
-        echo "Check the log file -- $LOG_FILE"
-        exit 1
+        Fail "Installing DB Server"
     fi
 }
 
