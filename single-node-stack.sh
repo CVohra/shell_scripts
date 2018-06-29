@@ -60,6 +60,8 @@ flush privileges;" >/tmp/student.sql
 
 AppSetup() {
     Head "Application Server Configurations"
+    yum install java -y &>>$LOG_FILE
+    Stat $? "Installing Java"
 }
 
 ### Main Program
