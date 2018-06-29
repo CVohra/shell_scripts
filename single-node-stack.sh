@@ -21,7 +21,12 @@ Fail() {
     exit 1
 }
 
+Head() {
+    echo -e "\t\e[1;4;35m $1 $N"
+}
+
 DBSetup() {
+    Head "DB Server Configurations"
     yum install mariadb-server -y &>>$LOG_FILE 
     if [ $? -eq 0 ]; then 
         Succ "Installing DB Server"
