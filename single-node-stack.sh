@@ -10,6 +10,11 @@ Y="\e[33m"
 R="\e[31m"
 N="\e[0m"
 
+TOMCAT_URL="http://redrockdigimark.com/apachemirror/tomcat/tomcat-9/v9.0.10/bin/apache-tomcat-9.0.10.tar.gz"
+TOMCAT_DIR="/opt/$(echo $TOMCAT_URL| awk -F / '{print $NF}' | sed -e 's/.tar.gz//')"
+WAR_URL='https://github.com/cit-aliqui/APP-STACK/raw/master/student.war'
+JAR_URL='https://github.com/cit-aliqui/APP-STACK/raw/master/mysql-connector-java-5.1.40.jar'
+
 ### Functions
 Print() {
     echo -n -e "$1"
@@ -71,8 +76,16 @@ AppSetup() {
     Stat $?
     Print "Downloading Tomcat"
     cd /opt
-    wget -qO - http://redrockdigimark.com/apachemirror/tomcat/tomcat-9/v9.0.10/bin/apache-tomcat-9.0.10.tar.gz | tar -xz 
+    wget -qO - $TOMCAT_URL | tar -xz 
     Stat $?
+    rm -rf $TOMCAT_DIR/webapps/*
+    Print "Downloading WAR file"
+    wget -q $WAR_URL -O $TOMCAT_DIR/webapps/student.war 
+    Stat $?
+    Print "Downloading JDBC Jar file"
+    wget -q $JAR_URL -O $TOMCAT_DIR/lib/mysql-connector-java-5.1.40.jar
+
+
 }
 
 ### Main Program
