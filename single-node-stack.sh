@@ -37,6 +37,10 @@ DBSetup() {
     Head "DB Server Configurations"
     yum install mariadb-server -y &>>$LOG_FILE 
     Stat $? "Installing MariaDB Server"
+    systemctl enable mariabd &>>$LOG_FILE 
+    systemctl start mariadb &>>$LOG_FILE
+    Stat $? "Starting MariaDB Server"
+    
 }
 
 
