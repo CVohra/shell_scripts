@@ -94,6 +94,16 @@ AppSetup() {
     wget -q $JAR_URL -O $TOMCAT_DIR/lib/mysql-connector-java-5.1.40.jar
     Stat $?
     sed -i -e '/TestDB/ d' -e "$ i $CONTEXT" $TOMCAT_DIR/conf/context.xml
+    ps -ef | grep tomcat | grep -v grep &>/dev/null 
+    if [ $? -eq 0 ]; then 
+        Print "Stopping Tomcat "
+        $TOMCAT_DIR/bin/shutdown.sh &>>$LOG_FILE 
+        Stat $?
+        sleep 3
+    fi 
+    Print "Starting Tomcat"
+    $TOMCAT_DIR/bin/startup.sh &>>$LOG_FILE 
+    Stat $?
 }
 
 ### Main Program
