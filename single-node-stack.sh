@@ -15,7 +15,7 @@ TOMCAT_DIR="/opt/$(echo $TOMCAT_URL| awk -F / '{print $NF}' | sed -e 's/.tar.gz/
 WAR_URL='https://github.com/cit-aliqui/APP-STACK/raw/master/student.war'
 JAR_URL='https://github.com/cit-aliqui/APP-STACK/raw/master/mysql-connector-java-5.1.40.jar'
 IPADDRESS=$(hostname -i)
-CONTEXT=$(echo <Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource" maxActive="50" maxIdle="30" maxWait="10000" username="student" password="student@1" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://IPADDRESS:3306/studentapp"/> | sed -e "s/IPADDRESS/$IPADDRESS/")
+CONTEXT=$(echo '<Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource" maxActive="50" maxIdle="30" maxWait="10000" username="student" password="student@1" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://IPADDRESS:3306/studentapp"/>' | sed -e "s/IPADDRESS/$IPADDRESS/")
 
 ### Functions
 Print() {
