@@ -58,12 +58,16 @@ flush privileges;" >/tmp/student.sql
 
 }
 
+AppSetup() {
+    Head "Application Server Configurations"
+}
 
 ### Main Program
 
 ## Check Root User or not.
 if [ $(id -u) -ne 0 ]; then 
-    echo -e "${R}You should be a root user to execute this script"
+    echo -e "${R}You should be a root user to execute this script$N"
     exit 2
 fi 
-DBSetup
+#DBSetup
+AppSetup
