@@ -11,6 +11,7 @@ DBSetup() {
         echo "Installing DB Server -- SUCCESS"
     else
         echo "Installing DB Server -- FAILURE"
+        echo "Check the log file -- $LOG_FILE"
         exit 1
     fi
 }
