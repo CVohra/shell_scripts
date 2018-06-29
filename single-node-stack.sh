@@ -25,14 +25,18 @@ Head() {
     echo -e "\t\e[1;4;36m $1 $N"
 }
 
+Stat() {
+    if [ $1 -eq 0 ]; then 
+        Succ "$2"
+    else
+        Fail "$2"
+    fi
+}
+
 DBSetup() {
     Head "DB Server Configurations"
     yum install mariadb-server -y &>>$LOG_FILE 
-    if [ $? -eq 0 ]; then 
-        Succ "Installing DB Server"
-    else
-        Fail "Installing DB Server"
-    fi
+    Stat $? "Installing MariaDB Server"
 }
 
 
