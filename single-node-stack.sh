@@ -17,6 +17,9 @@ JAR_URL='https://github.com/cit-aliqui/APP-STACK/raw/master/mysql-connector-java
 IPADDRESS=$(hostname -i)
 CONTEXT=$(echo '<Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource" maxActive="50" maxIdle="30" maxWait="10000" username="student" password="student@1" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://IPADDRESS:3306/studentapp"/>' | sed -e "s/IPADDRESS/$IPADDRESS/")
 
+MODJK_URL='http://www-us.apache.org/dist/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.43-src.tar.gz'
+MODJK_DIR="/opt/$(echo $MODJK_URL| awk -F / '{print $NF}' | sed -e 's/.tar.gz//')"
+
 ### Functions
 Print() {
     echo -n -e "$1"
@@ -106,6 +109,37 @@ AppSetup() {
     Stat $?
 }
 
+WebSetup() {
+    Head "Web Server Configurations"
+    Print 'Installing Web Server'
+    yum install httpd httpd-devel gcc -y &>>$LOG_FILE 
+    Stat $?
+    Print "Downloading ModJK"
+    if [ -d "$MODJK_DIR" ]; then 
+        Stat SKIP
+    else 
+        cd $MODJK_DIR/native
+        ./configure --with-apxs=/usr/bin/apxs &>>$LOG_FILE
+        make &>>$LOG_FILE
+        make install &>>$LOG_FILE
+        Stat $?
+    fi 
+    echo 'LoadModule jk_module modules/mod_jk.so
+
+JkWorkersFile conf.d/worker.properties
+JkMount /student local
+JkMount /student/* local' >/etc/httpd/conf.d/mod-jk.conf
+
+    echo'worker.list=local
+worker.local.host=localhost
+worker.local.port=8009' > /etc/httpd/conf.d/worker.properties 
+    Print "Starting Web Service"
+    systemctl enable httpd &>>$LOG_FILE 
+    systemctl start httpd &>>$LOG_FILE 
+    Stat $?
+        
+}
+
 ### Main Program
 
 ## Check Root User or not.
@@ -114,4 +148,5 @@ if [ $(id -u) -ne 0 ]; then
     exit 2
 fi 
 #DBSetup
-AppSetup
+#AppSetup
+WebSetup
