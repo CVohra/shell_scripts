@@ -118,12 +118,16 @@ WebSetup() {
     if [ -d "$MODJK_DIR" ]; then 
         Stat SKIP
     else 
-        cd $MODJK_DIR/native
-        ./configure --with-apxs=/usr/bin/apxs &>>$LOG_FILE
-        make &>>$LOG_FILE
-        make install &>>$LOG_FILE
+        wget -qO- $MODJK_URL |tar -xz 
         Stat $?
-    fi 
+    fi
+    Print "Installing ModJK"
+    cd $MODJK_DIR/native
+    ./configure --with-apxs=/usr/bin/apxs &>>$LOG_FILE
+    make &>>$LOG_FILE
+    make install &>>$LOG_FILE
+    Stat $?      
+     
     echo 'LoadModule jk_module modules/mod_jk.so
 
 JkWorkersFile conf.d/worker.properties
