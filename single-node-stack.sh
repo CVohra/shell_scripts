@@ -135,7 +135,7 @@ JkWorkersFile conf.d/worker.properties
 JkMount /student local
 JkMount /student/* local' >/etc/httpd/conf.d/mod-jk.conf
 
-    echo'worker.list=local
+    echo 'worker.list=local
 worker.local.host=localhost
 worker.local.port=8009' > /etc/httpd/conf.d/worker.properties 
     Print "Starting Web Service"
