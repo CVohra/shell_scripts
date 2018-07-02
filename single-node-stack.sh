@@ -152,6 +152,6 @@ if [ $(id -u) -ne 0 ]; then
     echo -e "${R}You should be a root user to execute this script$N"
     exit 2
 fi 
-#DBSetup
-#AppSetup
+DBSetup
+AppSetup
 WebSetup
