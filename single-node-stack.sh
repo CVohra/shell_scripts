@@ -118,6 +118,7 @@ WebSetup() {
     if [ -d "$MODJK_DIR" ]; then 
         Stat SKIP
     else 
+        cd /opt
         wget -O- $MODJK_URL |tar -xz 
         Stat $?
     fi
