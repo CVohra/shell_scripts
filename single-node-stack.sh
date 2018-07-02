@@ -119,7 +119,7 @@ WebSetup() {
         Stat SKIP
     else 
         cd /opt
-        wget -O- $MODJK_URL |tar -xz 
+        wget -qO- $MODJK_URL |tar -xz 
         Stat $?
     fi
     Print "Installing ModJK"
