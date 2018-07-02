@@ -118,7 +118,7 @@ WebSetup() {
     if [ -d "$MODJK_DIR" ]; then 
         Stat SKIP
     else 
-        wget -qO- $MODJK_URL |tar -xz 
+        wget -O- $MODJK_URL |tar -xz 
         Stat $?
     fi
     Print "Installing ModJK"
