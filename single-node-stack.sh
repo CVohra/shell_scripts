@@ -10,7 +10,7 @@ Y="\e[33m"
 R="\e[31m"
 N="\e[0m"
 
-TOMCAT_URL="http://redrockdigimark.com/apachemirror/tomcat/tomcat-9/v9.0.10/bin/apache-tomcat-9.0.10.tar.gz"
+TOMCAT_URL="http://mirrors.fibergrid.in/apache/tomcat/tomcat-9/v9.0.11/bin/apache-tomcat-9.0.11.tar.gz"
 TOMCAT_DIR="/opt/$(echo $TOMCAT_URL| awk -F / '{print $NF}' | sed -e 's/.tar.gz//')"
 WAR_URL='https://github.com/cit-aliqui/APP-STACK/raw/master/student.war'
 JAR_URL='https://github.com/cit-aliqui/APP-STACK/raw/master/mysql-connector-java-5.1.40.jar'
